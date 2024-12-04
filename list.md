@@ -381,3 +381,33 @@ legend(legend_str);
 grid on;
 
 ````
+
+
+## Exercício 3
+````
+
+num = 16; % Numerador da função de transferência
+den = [1 4 16]; % Denominador fixo
+
+p_values = [Inf 12 6 4 2];
+
+t = 0:0.01:10;
+
+figure;
+hold on;
+
+for i = 1:length(p_values)
+    p = p_values(i);
+    sys = tf(num, [1 4 16 p]);
+    [y, t] = step(sys);
+    plot(t, y);
+    legend_str{i} = sprintf('p = %g', p);
+end
+
+xlabel('Tempo (s)');
+ylabel('Saída');
+title('Resposta ao Degrau para Diferentes Valores de p');
+legend(legend_str);
+grid on;
+
+````

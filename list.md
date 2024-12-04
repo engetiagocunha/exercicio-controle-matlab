@@ -327,7 +327,7 @@ legend('G1', 'G2', 'G3', ...
 
 ----------------------------------------------------------------------------
 # 6 ANÁLISE DA RESPOSTA TRANSITÓRIA DE SISTEMAS DE 2A ORDEM E SUPERIOR
-
+## Exercício 1
 
 ````
 wn = 3.5;

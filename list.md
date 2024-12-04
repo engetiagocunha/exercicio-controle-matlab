@@ -189,20 +189,16 @@ grid on;
 ## Exercício 3
 
 ````
-% Definição do operador 's' no MATLAB
-s = tf('s');  % Definir s como a variável de Laplace
+s = tf('s');
 
-% Definição das funções de transferência dos sistemas
 G1 = 4.8 / (s^2 + 2*s + 4.8);
 G2 = 2.8 / (s^2 + 2*s + 2.8);
 G3 = 2 / (s^2 + 2*s + 2);
 
-% Polos de cada sistema
 poles_G1 = roots([1 2 4.8]);
 poles_G2 = roots([1 2 2.8]);
 poles_G3 = roots([1 2 2]);
 
-% Exibição dos polos
 disp("Polos do sistema G1:");
 disp(poles_G1);
 disp("Polos do sistema G2:");
@@ -210,28 +206,25 @@ disp(poles_G2);
 disp("Polos do sistema G3:");
 disp(poles_G3);
 
-% Tempo de simulação
-t = linspace(0, 5, 1000);  % De 0 a 5 segundos
+t = linspace(0, 5, 1000);
 
-% Entrada degrau unitário
-u = ones(size(t));  % Degrau unitário
+u = ones(size(t));
 
-% Simulação da resposta ao degrau
-y1 = lsim(G1, u, t);  % Resposta do sistema G1
-y2 = lsim(G2, u, t);  % Resposta do sistema G2
-y3 = lsim(G3, u, t);  % Resposta do sistema G3
+y1 = lsim(G1, u, t);
+y2 = lsim(G2, u, t);
+y3 = lsim(G3, u, t);
 
-% Plotagem das respostas
 figure;
-plot(t, y1, 'r', 'LineWidth', 2);  % Resposta do G1 (vermelho)
+plot(t, y1, 'r', 'LineWidth', 2);
 hold on;
-plot(t, y2, 'g', 'LineWidth', 2);  % Resposta do G2 (verde)
-plot(t, y3, 'b', 'LineWidth', 2);  % Resposta do G3 (azul)
+plot(t, y2, 'g', 'LineWidth', 2);
+plot(t, y3, 'b', 'LineWidth', 2);
 xlabel("Tempo (s)");
 ylabel("Amplitude");
 title("Respostas ao Degrau Unitário dos Sistemas em malha aberta");
 legend("Sistema G1", "Sistema G2", "Sistema G3", "Location", "southeast");
 grid on;
+
 
 ````
 

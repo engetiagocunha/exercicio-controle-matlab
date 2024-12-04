@@ -411,3 +411,50 @@ legend(legend_str);
 grid on;
 
 ````
+
+
+## Exercício 4
+````
+num = 16;
+den = [1 10 16];
+sys = tf(num, den);
+
+[y, t] = step(sys);
+
+[Mp, tp_idx] = max(y);
+tp = t(tp_idx);
+
+tr_idx = find(y >= 0.05*Mp, 1);
+tr = t(tr_idx);
+
+ts_idx = find(abs(y(end) - y) <= 0.05*abs(y(end)), 1);
+ts = t(ts_idx);
+
+disp(['Pico Máximo (Mp): ', num2str(Mp)]);
+disp(['Tempo de Pico (tp): ', num2str(tp)]);
+disp(['Tempo de Subida (tr): ', num2str(tr)]);
+disp(['Tempo de Assentamento (ts): ', num2str(ts)]);
+
+Kc_est = 2;
+Pc_est = 3;
+
+Kp = 0.6*Kc_est;
+Ti = 0.5*Pc_est;
+Td = 0.125*Pc_est;
+
+num_approx = Kp * [Td 1];
+den_approx = [Ti 1];
+sys_approx = tf(num_approx, den_approx);
+
+[y_approx, t_approx] = step(sys_approx);
+
+figure;
+hold on;
+plot(t, y, 'b', 'LineWidth', 2);
+plot(t_approx, y_approx, 'r--', 'LineWidth', 2);
+xlabel('Tempo (s)');
+ylabel('Saída');
+title('Comparação entre o Sistema Original e o Sistema de Segunda Ordem');
+legend('Sistema Original', 'Sistema de Segunda Ordem');
+grid on;
+````

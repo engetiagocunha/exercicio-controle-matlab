@@ -284,20 +284,16 @@ grid on;
 ## Exercício 4
 
 ````
-% Definição das funções de transferência com numerador e denominador explícitos
-s = tf('s');  % Definindo a variável simbólica 's' no MATLAB
+s = tf('s');
 
-% Definindo as funções de transferência para cada sistema
 G1 = 4.8 / (s^2 + 2*s + 4.8);
 G2 = 19.2 / (s^2 + 4*s + 19.2);
 G3 = 173 / (s^2 + 12*s + 173);
 
-% Polos de cada sistema (obtidos diretamente dos denominadores)
-poles_G1 = roots([1 2 4.8]);  % Polos de G1
-poles_G2 = roots([1 4 19.2]); % Polos de G2
-poles_G3 = roots([1 12 173]); % Polos de G3
+poles_G1 = roots([1 2 4.8]);
+poles_G2 = roots([1 4 19.2]);
+poles_G3 = roots([1 12 173]);
 
-% Exibição dos polos
 disp("Polos do sistema G1:");
 disp(poles_G1);
 disp("Polos do sistema G2:");
@@ -305,64 +301,49 @@ disp(poles_G2);
 disp("Polos do sistema G3:");
 disp(poles_G3);
 
-% Tempo de simulação
-t = 0:0.01:4;  % Tempo de 0 a 4 segundos
+t = 0:0.01:4;
+u = ones(size(t));
 
-% Entrada degrau unitário
-u = ones(size(t));  % Entrada degrau unitário
+y1 = lsim(G1, u, t);
+y2 = lsim(G2, u, t);
+y3 = lsim(G3, u, t);
 
-% Simulação das respostas ao degrau para cada sistema
-y1 = lsim(G1, u, t);  % Resposta ao degrau de G1
-y2 = lsim(G2, u, t);  % Resposta ao degrau de G2
-y3 = lsim(G3, u, t);  % Resposta ao degrau de G3
-
-% Plotando os polos e as respostas no mesmo gráfico
 figure;
 
-% Subgráfico 1: Polos dos sistemas
 subplot(1, 2, 1);
 plot(real(poles_G1), imag(poles_G1), 'o', 'MarkerSize', 8, 'LineWidth', 2);
 hold on;
 plot(real(poles_G2), imag(poles_G2), 'x', 'MarkerSize', 8, 'LineWidth', 2);
 plot(real(poles_G3), imag(poles_G3), '+', 'MarkerSize', 8, 'LineWidth', 2);
-xlabel('Parte Real');
-ylabel('Parte Imaginária');
 legend('G1', 'G2', 'G3');
 title('Polos dos Sistemas');
 grid on;
 
-% Subgráfico 2: Respostas ao degrau dos sistemas
 subplot(1, 2, 2);
-plot(t, y1, 'b', 'LineWidth', 2);  % Resposta de G1
+plot(t, y1, 'b', 'LineWidth', 2);
 hold on;
-plot(t, y2, 'r', 'LineWidth', 2);  % Resposta de G2
-plot(t, y3, 'g', 'LineWidth', 2);  % Resposta de G3
+plot(t, y2, 'r', 'LineWidth', 2);
+plot(t, y3, 'g', 'LineWidth', 2);
 xlabel('Tempo (s)');
-ylabel('Amplitude');
 legend('G1', 'G2', 'G3');
 title('Respostas ao Degrau dos Sistemas');
 grid on;
-````
 
-----------------------------------------------------------------------------
+````
 
 ## Exercício 5
 
 ````
-% Definição das funções de transferência
-s = tf('s');  % Definindo a variável simbólica 's' no MATLAB
+s = tf('s');
 
-% Funções de transferência
 G1 = 9 / (s^2 + 9);
 G2 = 100.25 / (s^2 - s + 100.25);
 G3 = 2 / (s^2 + s - 2);
 
-% Polos de cada sistema (obtidos diretamente dos denominadores)
-poles_G1 = roots([1 0 9]);   % Polos de G1
-poles_G2 = roots([1 -1 100.25]); % Polos de G2
-poles_G3 = roots([1 1 -2]);  % Polos de G3
+poles_G1 = roots([1 0 9]);
+poles_G2 = roots([1 -1 100.25]);
+poles_G3 = roots([1 1 -2]);
 
-% Exibição dos polos
 disp("Polos de G1:");
 disp(poles_G1);
 disp("Polos de G2:");
@@ -370,36 +351,61 @@ disp(poles_G2);
 disp("Polos de G3:");
 disp(poles_G3);
 
-% Tempo de simulação
-t = linspace(0, 5, 1000);  % Tempo de 0 a 5 segundos, com 1000 pontos
+t = linspace(0, 5, 1000);
 
-% Entrada degrau unitário
-u = ones(size(t));  % Entrada degrau unitário
+u = ones(size(t));
 
-% Simulação das respostas ao degrau para cada sistema
-y_G1 = lsim(G1, u, t);  % Resposta de G1
-y_G2 = lsim(G2, u, t);  % Resposta de G2
-y_G3 = lsim(G3, u, t);  % Resposta de G3
+y_G1 = lsim(G1, u, t);
+y_G2 = lsim(G2, u, t);
+y_G3 = lsim(G3, u, t);
 
-% Plotando as respostas ao degrau e polos no mesmo gráfico
 figure;
-plot(t, y_G1, 'r', 'LineWidth', 2);  % Resposta G1 em vermelho
+plot(t, y_G1, 'r', 'LineWidth', 2);
 hold on;
-plot(t, y_G2, 'g', 'LineWidth', 2);  % Resposta G2 em verde
-plot(t, y_G3, 'b', 'LineWidth', 2);  % Resposta G3 em azul
-
-% Plotando os polos no mesmo gráfico
+plot(t, y_G2, 'g', 'LineWidth', 2);
+plot(t, y_G3, 'b', 'LineWidth', 2);
 plot(real(poles_G1), imag(poles_G1), 'ro', 'MarkerSize', 8, 'LineWidth', 2);
 plot(real(poles_G2), imag(poles_G2), 'go', 'MarkerSize', 8, 'LineWidth', 2);
 plot(real(poles_G3), imag(poles_G3), 'bo', 'MarkerSize', 8, 'LineWidth', 2);
 
-% Personalizando gráfico
 grid on;
 title('Respostas ao Degrau e Polos dos Sistemas');
 xlabel('Tempo (s) / Parte Real');
 ylabel('Amplitude / Parte Imaginária');
-legend('G1 - Resposta', 'G2 - Resposta', 'G3 - Resposta', ...
-    'Polos de G1', 'Polos de G2', 'Polos de G3', 'Location', 'best');
+legend('G1', 'G2', 'G3', ...
+    'G1', 'G2', 'G3', 'Location', 'best');
+
+
+````
+
+----------------------------------------------------------------------------
+# 6 ANÁLISE DA RESPOSTA TRANSITÓRIA DE SISTEMAS DE 2A ORDEM E SUPERIOR
+
+
+````
+wn = 3.5;
+zeta = 0.48;
+K = 2;
+
+num = K * wn^2;
+den = [1, 2 * zeta * wn, wn^2];
+G = tf(num, den);
+
+t = 0:0.01:5;
+
+u1 = 2;
+u2 = 3;
+
+[y1, t1] = step(u1 * G, t);
+[y2, t2] = step(u2 * G, t);
+
+figure;
+plot(t1, y1, 'b-', t2, y2, 'r--', 'LineWidth', 1.5);
+legend("Degrau de Amplitude 2", "Degrau de Amplitude 3");
+xlabel("Tempo (s)");
+ylabel("Amplitude");
+title("Resposta do Sistema");
+grid on;
 ````
 
 

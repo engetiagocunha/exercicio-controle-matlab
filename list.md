@@ -355,4 +355,29 @@ title("Resposta do Sistema");
 grid on;
 ````
 
+## Exercício 2
+````
+num = 16*[1 1];
+den = [1 4 16];
+z_values = [Inf 12 6 4 2];
+t = 0:0.01:10;
+figure;
+hold on;
+for i = 1:length(z_values)
+    z = z_values(i);
+    sys = tf(num*z, [den z]);
+    step(sys, t);
+    [y, t] = step(sys);
+    Mp = max(y) - 1;
+    tp = find(y == max(y), 1);
+    ts = find(y >= 0.95 & y <= 1.05, 1);
+    plot(t, y);
+    legend_str{i} = sprintf('z = %g', z);
+end
+xlabel('Tempo (s)');
+ylabel('Saída');
+title('Resposta ao Degrau para Diferentes Valores de z');
+legend(legend_str);
+grid on;
 
+````

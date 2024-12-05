@@ -566,3 +566,56 @@ ylabel("Saída");
 grid on;
 
 ````
+
+## Exercício 3
+````
+K = 1;
+num = 100 * K;
+den = [1 15 50];
+
+sys_open = tf(num, den);
+
+figure;
+bode(sys_open);
+grid on;
+title('Diagrama de Bode do Sistema em Malha Aberta');
+
+[mag, phase, w] = bode(sys_open);
+mag = squeeze(mag);
+phase = squeeze(phase);
+w = squeeze(w);
+
+w_g = w(find(mag <= 1, 1));
+K_g = mag(find(mag <= 1, 1));
+w_f = w(find(phase <= -180, 1));
+gamma = phase(find(phase <= -180, 1));
+
+fprintf('Frequência de cruzamento de ganho: %.4f rad/s\n', w_g);
+fprintf('Margem de ganho (K_g): %.4f\n', K_g);
+fprintf('Frequência de cruzamento de fase: %.4f rad/s\n', w_f);
+fprintf('Margem de fase (gamma): %.4f graus\n', gamma);
+
+[Kg, Gama] = margin(sys_open);
+
+fprintf('Kg (com comando margin): %.4f\n', Kg);
+fprintf('Gama (com comando margin): %.4f graus\n', Gama);
+
+figure;
+margin(sys_open);
+title('Resposta do Sistema com Comando margin');
+grid on;
+
+a = [1 15 50];
+disp('Critério de estabilidade de Routh-Hurwitz:');
+Routh = routh(a);
+
+sys_closed = tf(Kg * num, den);
+
+figure;
+step(sys_closed);
+title('Resposta ao Degrau com K = Kg');
+xlabel('Tempo (s)');
+ylabel('Saída');
+grid on;
+
+````

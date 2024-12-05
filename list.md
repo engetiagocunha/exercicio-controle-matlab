@@ -496,3 +496,73 @@ fprintf('Erro em regime permanente do Sistema 1: %f\n', error1);
 fprintf('Erro em regime permanente do Sistema 2: %f\n', error2);
 
 ````
+
+
+## Exercício 2
+````
+% Definir a função de transferência do sistema
+num1 = 120;            % Numerador do sistema 1
+den1 = [1 60 0 0];     % Denominador do sistema 1 (s^3 + 60s^2)
+
+num2 = [4.5 45];       % Numerador do sistema 2 (4.5*(s + 10))
+den2 = [1 6 8];        % Denominador do sistema 2 ((s + 2)(s + 4))
+
+% Criar as funções de transferência
+sys1 = tf(num1, den1);
+sys2 = tf(num2, den2);
+
+%% Item (a) Coeficiente de erro
+% Usando o Bode para verificar o ganho em baixa frequência
+[mag1, ~] = bode(sys1, 0); % Ganho em baixa frequência (s -> 0)
+[mag2, ~] = bode(sys2, 0);
+
+% Erro estático para entrada degrau (tipo 0 -> erro infinito)
+if isequal(den1(end), 0) || isequal(den2(end), 0)
+    disp("Erro em regime permanente é infinito para entrada degrau (Tipo 0).");
+else
+    K1 = dcgain(sys1); % Ganho DC do sistema 1
+    K2 = dcgain(sys2); % Ganho DC do sistema 2
+    erro1 = 1 / (1 + K1); % Coeficiente de erro do sistema 1
+    erro2 = 1 / (1 + K2); % Coeficiente de erro do sistema 2
+
+    fprintf("Coeficiente de erro do Sistema 1: %.4f\n", erro1);
+    fprintf("Coeficiente de erro do Sistema 2: %.4f\n", erro2);
+end
+
+%% Item (b) Erro absoluto e percentual para entrada degrau
+% Simular a resposta ao degrau
+t = 0:0.01:10; % Vetor de tempo para simulação
+[y1, t1] = step(sys1, t);
+[y2, t2] = step(sys2, t);
+
+% Erro absoluto no regime permanente
+erro_abs1 = 1 - y1(end); % Para o sistema 1
+erro_abs2 = 1 - y2(end); % Para o sistema 2
+
+% Erro percentual
+erro_perc1 = erro_abs1 * 100;
+erro_perc2 = erro_abs2 * 100;
+
+fprintf("Erro absoluto do Sistema 1: %.4f\n", erro_abs1);
+fprintf("Erro percentual do Sistema 1: %.2f%%\n", erro_perc1);
+
+fprintf("Erro absoluto do Sistema 2: %.4f\n", erro_abs2);
+fprintf("Erro percentual do Sistema 2: %.2f%%\n", erro_perc2);
+
+%% Item (c) Resposta ao degrau e verificação
+figure;
+subplot(2, 1, 1);
+step(sys1, t);
+title("Resposta ao Degrau - Sistema 1");
+xlabel("Tempo (s)");
+ylabel("Saída");
+grid on;
+
+subplot(2, 1, 2);
+step(sys2, t);
+title("Resposta ao Degrau - Sistema 2");
+xlabel("Tempo (s)");
+ylabel("Saída");
+grid on;
+
+````

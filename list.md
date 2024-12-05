@@ -619,3 +619,22 @@ ylabel('Saída');
 grid on;
 
 ````
+
+
+## Exercício 4
+````
+% Parâmetros do sistema
+K = 1; % Valor inicial do ganho K
+num = K * [1 3]; % Numerador do sistema (K(s+3))
+den = conv([1 0], conv([1 1], conv([1 2], [1 4]))); % Denominador do sistema: s(s+1)(s+2)(s+4)
+
+% Função de transferência do sistema em malha aberta
+sys_open = tf(num, den);
+
+% Plotar o diagrama de Bode
+figure;
+bode(sys_open);
+grid on;
+title('Diagrama de Bode do Sistema em Malha Aberta');
+
+````

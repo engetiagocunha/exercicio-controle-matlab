@@ -458,3 +458,41 @@ title('Comparação entre o Sistema Original e o Sistema de Segunda Ordem');
 legend('Sistema Original', 'Sistema de Segunda Ordem');
 grid on;
 ````
+
+
+
+----------------------------------------------------------------------------
+# 7 ANÁLISE DA RESPOSTA EM FREQÜÊNCIA ATRAVÉS DOS DIAGRAMAS DE BODE
+## Exercício 1
+````
+% Definindo as funções de transferência dos sistemas
+num1 = 32;
+den1 = [1 48 16];
+sys1 = tf(num1, den1);
+
+num2 = 40;
+den2 = [1 8 5];
+sys2 = tf(num2, den2);
+
+% Calculando os erros em regime permanente para uma entrada degrau
+% (Assumindo que o sistema está em malha fechada com um controlador proporcional unitário)
+Kp = 1;  % Ganho proporcional
+sys1_fb = feedback(Kp*sys1, 1);
+sys2_fb = feedback(Kp*sys2, 1);
+
+% Erro em regime permanente para uma entrada degrau
+error1 = 1/dcgain(sys1_fb);
+error2 = 1/dcgain(sys2_fb);
+
+% Plotando os diagramas de Bode
+figure;
+bode(sys1);
+hold on;
+bode(sys2);
+legend('Sistema 1', 'Sistema 2');
+
+% Imprimindo os erros em regime permanente
+fprintf('Erro em regime permanente do Sistema 1: %f\n', error1);
+fprintf('Erro em regime permanente do Sistema 2: %f\n', error2);
+
+````
